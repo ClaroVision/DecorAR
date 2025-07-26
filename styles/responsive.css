@@ -1,0 +1,107 @@
+/* ======== Responsive Design ======== */
+@media (max-width: 1200px) {
+    .app-container {
+        flex-direction: column;
+    }
+    
+    .sidebar,
+    .properties-panel {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .canvas-container {
+        flex: 1;
+    }
+}
+
+@media (max-width: 992px) {
+    .furniture-items {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .furniture-items {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .canvas-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .furniture-items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .sidebar-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .clear-all {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
+    
+    .canvas-controls {
+        padding: 8px 10px;
+    }
+    
+    .canvas-controls button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .view-controls {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .view-controls button {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .furniture-items {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .furniture-item {
+        padding: 8px;
+    }
+    
+    .furniture-item img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .upload-section {
+        padding: 10px;
+    }
+    
+    .upload-section h3 {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+    
+    .upload-section button {
+        width: 100%;
+    }
+    
+    .property-group label {
+        font-size: 14px;
+    }
+    
+    .position-controls input {
+        padding: 6px;
+        font-size: 14px;
+    }
+}
