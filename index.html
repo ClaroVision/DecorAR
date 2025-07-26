@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DecorAR - Room Decoration Planner</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-couch"></i>
+                <span>DecorAR</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Furniture Items</h2>
+                <button id="clear-all" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Clear All
+                </button>
+            </div>
+            
+            <div class="furniture-categories">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="seating">Seating</button>
+                <button class="category-btn" data-category="tables">Tables</button>
+                <button class="category-btn" data-category="lighting">Lighting</button>
+                <button class="category-btn" data-category="storage">Storage</button>
+            </div>
+            
+            <div class="furniture-items">
+                <div class="furniture-item" draggable="true" data-category="seating" data-model="sofa">
+                    <img src="https://i.pinimg.com/1200x/1a/b2/a1/1ab2a109f06430bb1358087ac756b74c.jpg" alt="Sofa">
+                    <span>Sofa</span>
+                </div>
+                <div class="furniture-item" draggable="true" data-category="seating" data-model="armchair">
+                    <img src="https://i.pinimg.com/736x/84/e9/c4/84e9c41a6609ea00b1e49475f2c3c723.jpg" alt="Armchair">
+                    <span>Armchair</span>
+                </div>
+                <!-- Add this after the furniture-items section in the sidebar -->
+                <div class="chair-options" style="display: none;">
+                    <h3>Chair Options</h3>
+                    <div class="chair-list">
+                        <!-- Chair options will be populated dynamically -->
+                    </div>
+                </div>
+                <div class="furniture-item" draggable="true" data-category="tables" data-model="coffee-table">
+                    <img src="https://i.pinimg.com/1200x/69/ae/ec/69aeeca08a5d57bb1000c469d993db78.jpg" alt="Coffee Table">
+                    <span>Coffee Table</span>
+                </div>
+                <div class="furniture-item" draggable="true" data-category="tables" data-model="dining-table">
+                    <img src="https://i.pinimg.com/1200x/e4/db/cf/e4dbcfd27f1df38fd47ad01517a8bbce.jpg" alt="Dining Table">
+                    <span>Dining Table</span>
+                </div>
+                <div class="furniture-item" draggable="true" data-category="lighting" data-model="floor-lamp">
+                    <img src="https://i.pinimg.com/1200x/0f/b9/44/0fb944d966584b310afbe0cd3bfac85e.jpg" alt="Floor Lamp">
+                    <span>Floor Lamp</span>
+                </div>
+                <div class="furniture-item" draggable="true" data-category="lighting" data-model="ceiling-light">
+                    <img src="https://i.pinimg.com/736x/33/8b/55/338b555d4f1cd8148b091d0078c583e2.jpg" alt="Ceiling Light">
+                    <span>Ceiling Light</span>
+                </div>
+                <div class="furniture-item" draggable="true" data-category="storage" data-model="bookshelf">
+                    <img src="https://i.pinimg.com/1200x/09/b6/2f/09b62ff468ccec8e02eb336f96964e4a.jpg" alt="Bookshelf">
+                    <span>Bookshelf</span>
+                </div>
+                <div class="furniture-item" draggable="true" data-category="storage" data-model="tv-stand">
+                    <img src="https://i.pinimg.com/1200x/bd/84/d3/bd84d3ecd979da16778ea4a0cfcc16c8.jpg" alt="TV Stand">
+                    <span>TV Stand</span>
+                </div>
+            </div>
+            
+            <div class="upload-section">
+                <h3>Upload Room Image</h3>
+                <input type="file" id="room-image" accept="image/*">
+                <button id="apply-texture" class="btn btn-primary">Apply Texture</button>
+            </div>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="decorar-canvas"></canvas>
+            
+            <div class="canvas-controls">
+                <button id="rotate-mode" class="btn btn-secondary">
+                    <i class="fas fa-sync-alt"></i> Rotate
+                </button>
+                <button id="scale-mode" class="btn btn-secondary">
+                    <i class="fas fa-expand-arrows-alt"></i> Scale
+                </button>
+                <button id="delete-mode" class="btn btn-secondary">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <button id="save-design" class="btn btn-success">
+                    <i class="fas fa-save"></i> Save Design
+                </button>
+            </div>
+            
+            <div class="view-controls">
+                <button id="zoom-in" class="btn btn-sm">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button id="zoom-out" class="btn btn-sm">
+                    <i class="fas fa-search-minus"></i>
+                </button>
+                <button id="reset-view" class="btn btn-sm">
+                    <i class="fas fa-home"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="properties-panel">
+            <h3>Properties</h3>
+            <div id="no-selection" class="no-selection">
+                <p>No item selected</p>
+            </div>
+            <div id="item-properties" class="item-properties" style="display: none;">
+                <div class="property-group">
+                    <label>Position</label>
+                    <div class="position-controls">
+                        <input type="number" id="pos-x" placeholder="X">
+                        <input type="number" id="pos-y" placeholder="Y">
+                        <input type="number" id="pos-z" placeholder="Z">
+                    </div>
+                </div>
+                <div class="property-group">
+                    <label>Rotation</label>
+                    <input type="range" id="rotation" min="0" max="360" value="0">
+                    <span id="rotation-value">0°</span>
+                </div>
+                <div class="property-group">
+                    <label>Scale</label>
+                    <input type="range" id="scale" min="0.1" max="2" step="0.1" value="1">
+                    <span id="scale-value">1.0</span>
+                </div>
+                <button id="apply-properties" class="btn btn-primary">Apply Changes</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>DecorAR</h3>
+                    <p>Transform your room design with our interactive decoration planner.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 DecorAR. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/three-setup.js"></script>
+    <script src="js/drag-drop.js"></script>
+</body>
+</html>
